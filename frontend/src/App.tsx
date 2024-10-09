@@ -1,11 +1,20 @@
 import './App.css'
+import Container from './components/lib/Container';
+import Search from './components/Search';
+import SearchResultModel from './models/SearchResultModel';
 
 function App() {
+
+  const onSearch = (searchValue: string, searchResult: SearchResultModel) => {
+    console.log(searchValue);
+    console.log(searchResult);
+  };
+
   return (
-    <div className="min-h-screen flex justify-center items-center">
-        <h1 className="text-3xl font-bold text-green-600">
-            Das ist ein Testprojekt
-        </h1>
+    <div>
+      <Container>
+        <Search onSearch={onSearch} />
+      </Container>
     </div>
 );
 }
