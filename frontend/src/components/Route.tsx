@@ -3,7 +3,7 @@ import Home from "./pages/Home"
 const getRoutes = () => {
     return [
         {
-            path: "/",
+            path: "/:stop?",
             element: <Home />
         }
     ]

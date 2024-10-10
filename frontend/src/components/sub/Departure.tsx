@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SearchResultModel from "../../models/SearchResultModel";
 
 export interface DepartureProps {
@@ -28,7 +29,9 @@ function Departure({model}: DepartureProps) {
                             <td className="py-3 px-4 border-b">{c.track}</td>
                             <td className="py-3 px-4 border-b">{c["*Z"]}</td>
                             <td className="py-3 px-4 border-b">{c.line}</td>
-                            <td className="py-3 px-4 border-b">{c.terminal.name}</td>
+                            <td className="py-3 px-4 border-b">
+                                <Link className="text-blue-600 hover:underline hover:text-blue-800 transition duration-200 ease-in-out" to={'/' + c.terminal.name}>{c.terminal.name}</Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
