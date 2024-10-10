@@ -1,4 +1,4 @@
-import SearchResultModel from "../models/SearchResultModel";
+import SearchResultModel from "../../models/SearchResultModel";
 
 export interface DepartureProps {
     model: SearchResultModel | undefined
