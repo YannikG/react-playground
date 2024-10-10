@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import SearchResultModel from "../../models/SearchResultModel";
-import Grid from "../lib/Grid";
 import Search from "../sub/Search";
 import Stop from "../sub/Stop";
 import Departure from "../sub/Departure";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { InputChangeEvent } from "../lib/Input";
+import MapWrapper, { MapWrapperPropsPoint } from "../sub/MapWrapper";
 
-function Home() {
+function HomePage() {
     const [result, setResultValue] = useState<SearchResultModel | undefined>();
     const [stopSearch, setStopSearchValue] = useState<string>('');
+    const [mapWrapperPoints, setMapWrapperPointsValue] = useState<MapWrapperPropsPoint[]>([]);
 
     const {stop: stopFromUrl} = useParams<{stop: string | undefined}>();
 
@@ -35,7 +36,16 @@ function Home() {
                 const responseText = await response.text();
 
                 if (response.ok && !responseText.includes('messages')) {
-                    setResultValue(JSON.parse(responseText));
+                    const model = JSON.parse(responseText) as SearchResultModel;
+                    setResultValue(model);
+
+                    setMapWrapperPointsValue([{
+                        centerOn: true,
+                        lat: model.stop.lat,
+                        lon: model.stop.lon,
+                        title: model.stop.name
+                    }]);
+
                 } else if (response.ok && responseText.includes('messages') && responseText.includes('not found.')) {
                     toast.error('Station nicht gefunden!');
                 } else {
@@ -57,14 +67,23 @@ function Home() {
     }, [stopFromUrl]);
 
     return (
-        <Grid cols={2}>
-            <Search searchStop={stopSearch} handleOnChange={handleOnChange} handleOnSearchButton={handleOnSearch} />
+        <>
+            <div className="my-4">
+                <Search searchStop={stopSearch} handleOnChange={handleOnChange} handleOnSearchButton={handleOnSearch} />
+            </div>
             <div className='my-4'>
                 <Stop model={result} />
-                <Departure model={result} />
+                <div className="grid grid-cols-4 gap-4">
+                    <div className="col-span-2">
+                        <Departure model={result} />
+                    </div>
+                    <div className="col-span-2 h-[600px]">
+                        <MapWrapper points={mapWrapperPoints} />
+                    </div>
+                </div>
             </div>
-        </Grid>
+        </>
     );
 };
 
-export default Home;
+export default HomePage;

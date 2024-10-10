@@ -1,10 +1,10 @@
-import Home from "./pages/Home"
+import HomePage from "./pages/HomePage"
 
 const getRoutes = () => {
     return [
         {
             path: "/:stop?",
-            element: <Home />
+            element: <HomePage />
         }
     ]
 }

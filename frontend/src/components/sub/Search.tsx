@@ -1,6 +1,5 @@
 import Input, { InputChangeEvent } from "../lib/Input";
 import Button from "../lib/Button";
-import Grid from "../lib/Grid";
 
 export interface SearchProps {
     searchStop: string;
@@ -10,10 +9,12 @@ export interface SearchProps {
 
 function Search({searchStop, handleOnChange, handleOnSearchButton}: SearchProps) {    
     return (
-        <Grid cols={2}>
-            <Input type={'text'} value={searchStop} placeholder={'Bern, Thun, Zürich ...'} onChange={handleOnChange} />
-            <Button type={'primary'} label={'Suchen'} onClick={handleOnSearchButton} />
-        </Grid>
+        <>
+            <div className="grid grid-cols-1 gap-1">
+                <Input type={'text'} value={searchStop} placeholder={'Bern, Thun, Zürich ...'} onChange={handleOnChange} />
+                <Button type={'primary'} label={'Suchen'} onClick={handleOnSearchButton} />
+            </div>
+        </>
     );
 }
 
