@@ -1,3 +1,4 @@
+import ConnectionPage from "./pages/ConnectionPage";
 import HomePage from "./pages/HomePage"
 
 const getRoutes = () => {
@@ -5,6 +6,10 @@ const getRoutes = () => {
         {
             path: "/:stop?",
             element: <HomePage />
+        },
+        {
+            path: "/connection/:number",
+            element: <ConnectionPage />
         }
     ]
 }

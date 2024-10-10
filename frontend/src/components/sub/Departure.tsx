@@ -27,7 +27,14 @@ function Departure({model}: DepartureProps) {
                         <tr key={c["*Z"] + c.terminal.name}>
                             <td className="py-3 px-4 border-b">{new Date(c.time).toLocaleTimeString()}</td>
                             <td className="py-3 px-4 border-b">{c.track}</td>
-                            <td className="py-3 px-4 border-b">{c["*Z"]}</td>
+                            <td className="py-3 px-4 border-b">
+                                <Link 
+                                    to={'/connection/' + encodeURIComponent(c["*Z"])}
+                                    state={{connection: c, stop: model.stop}}   
+                                >
+                                    {c["*Z"]}
+                                </Link>
+                            </td>
                             <td className="py-3 px-4 border-b">{c.line}</td>
                             <td className="py-3 px-4 border-b">
                                 <Link className="text-blue-600 hover:underline hover:text-blue-800 transition duration-200 ease-in-out" to={'/' + encodeURIComponent(c.terminal.name)}>{c.terminal.name}</Link>

@@ -10,7 +10,8 @@ export interface MapWrapperPropsPoint {
     centerOn: boolean,  // only the first centerOn will be used!
     lat: number, 
     lon: number, 
-    title: string
+    title: string,
+    zoom?: number,
 }
 
 export interface MapWrapperProps {
@@ -23,13 +24,15 @@ function findCenter(points: MapWrapperPropsPoint[]) {
     if (points.length > 0 && pointsToCenterOn.length > 0) {
         return {
             lon: pointsToCenterOn[0].lon,
-            lat: pointsToCenterOn[0].lat
+            lat: pointsToCenterOn[0].lat,
+            zoom: pointsToCenterOn[0].zoom ? pointsToCenterOn[0].zoom : 15,
         };
     }
 
     return {
         lon: 7.436378096839235,
         lat: 46.94839725787131,
+        zoom: 15,
     };
 }
 
@@ -42,8 +45,9 @@ function MapWrapper({points = []}: MapWrapperProps) {
             mapRef.current?.flyTo({
                 center: {
                     lat: center.lat,
-                    lon: center.lon
-                }
+                    lon: center.lon,
+                },
+                zoom: center.zoom,
             });
         }
     }, [points])
