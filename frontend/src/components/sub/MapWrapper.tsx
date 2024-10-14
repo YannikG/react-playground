@@ -6,6 +6,8 @@ import type {MapRef} from 'react-map-gl/maplibre';
 
 import { toast } from 'sonner';
 import { GeoPoint } from '../../models/GeoPoint';
+import Line from './map/Line';
+import CustomPopup from './map/CustomPopup';
 
 export interface MapWrapperPropsPoint extends GeoPoint {
     centerOn: boolean,  // only the first centerOn will be used!
@@ -98,6 +100,14 @@ function MapWrapper({points = [], movingPoint = undefined}: MapWrapperProps) {
                     movingPoint !== undefined ? <Marker key={'moving Point'} latitude={movingPoint.lat} longitude={movingPoint.lon} anchor='bottom'>
                         <img src="/moving_marker_60x60.png" />
                     </Marker> : null
+                }
+                {/* Assumes point 0 and 1 are the start and endpoint... testing only! */}
+                {
+                    points[0] && points[1] ? <Line start={points[0]} end={points[1]} /> : null
+                }
+                {/* Assume point 1 is our destination and we want there a popup */}
+                {
+                    points[1] ? <CustomPopup point={points[1]}><h1>{points[1].title} befindet sich hier</h1></CustomPopup> : null
                 }
             </Map>
         </>
