@@ -5,17 +5,17 @@ import Map, { AttributionControl, GeolocateControl, Marker, NavigationControl } 
 import type {MapRef} from 'react-map-gl/maplibre';
 
 import { toast } from 'sonner';
+import { GeoPoint } from '../../models/GeoPoint';
 
-export interface MapWrapperPropsPoint {
+export interface MapWrapperPropsPoint extends GeoPoint {
     centerOn: boolean,  // only the first centerOn will be used!
-    lat: number, 
-    lon: number, 
     title: string,
     zoom?: number,
 }
 
 export interface MapWrapperProps {
-    points: MapWrapperPropsPoint[]
+    points: MapWrapperPropsPoint[],
+    movingPoint?: GeoPoint | undefined
 };
 
 function findCenter(points: MapWrapperPropsPoint[]) {   
@@ -36,7 +36,7 @@ function findCenter(points: MapWrapperPropsPoint[]) {
     };
 }
 
-function MapWrapper({points = []}: MapWrapperProps) {
+function MapWrapper({points = [], movingPoint = undefined}: MapWrapperProps) {
     const mapRef = useRef<MapRef>();
 
     useEffect(() => {
@@ -51,6 +51,10 @@ function MapWrapper({points = []}: MapWrapperProps) {
             });
         }
     }, [points])
+
+    useEffect(() => {
+        console.log(movingPoint);
+    }, [movingPoint])
 
     const defaultCenter = findCenter(points);
 
@@ -90,6 +94,11 @@ function MapWrapper({points = []}: MapWrapperProps) {
                         <img src="/marker_30x50.png" />
                     </Marker>
                 )}
+                {
+                    movingPoint !== undefined ? <Marker key={'moving Point'} latitude={movingPoint.lat} longitude={movingPoint.lon} anchor='bottom'>
+                        <img src="/moving_marker_60x60.png" />
+                    </Marker> : null
+                }
             </Map>
         </>
     );

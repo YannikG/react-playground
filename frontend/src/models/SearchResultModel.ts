@@ -1,13 +1,13 @@
+import { GeoPoint } from "./GeoPoint";
+
 export default interface SearchResultModel {
     stop: SearchResultModelStop;
     connections: SearchResultModelConnection[];
 };
 
-export interface SearchResultModelStop {
+export interface SearchResultModelStop extends GeoPoint {
     id: string;
     name: string;
-    lon: number;
-    lat: number;
 };
 
 export interface SearchResultModelConnection {
@@ -19,8 +19,6 @@ export interface SearchResultModelConnection {
     terminal: SearchResultModelConnectionTerminal;
 };
 
-export interface SearchResultModelConnectionTerminal {
+export interface SearchResultModelConnectionTerminal extends GeoPoint {
     name: string;
-    lat: number;
-    lon: number;
 }
