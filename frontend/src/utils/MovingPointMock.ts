@@ -34,6 +34,7 @@ export default function movingPointMock(start: GeoPoint, end: GeoPoint, callback
             i++;
         }
         else {
+            callback(end);
             // When there are no points, we clear the interval.
             clearInterval(interval);
         }
